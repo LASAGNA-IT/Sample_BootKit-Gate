@@ -7,27 +7,7 @@ Sample Bootkit for Windows
 I bootkit sono tra le minacce più subdole del panorama cybersecurity. Non si limitano a infettare il sistema operativo: agiscono prima che Windows si avvii, partendo dalla partizione di boot (MBR/GPT, VBR) al bootloader, fino al firmware UEFI. Opera quindi in fase pre-OS, con privilegi superiori a quelli del kernel stesso, e può bypassare o disattivare meccanismi di sicurezza come Secure Boot, ELAM, PatchGuard e antivirus. È di fatto un rootkit pre-OS: persistente, stealth e difficile da rimuovere anche dopo formattazione o reinstallazione del sistema operativo. 
 In questo articolo documento in modo tecnico e difensivo un componente: efi_stage, un’applicazione EFI personalmente sviluppata che fa parte di una catena di persistenza pre-OS.
 
-
-[Firmware UEFI]
-       |
-       v
-[efi_stage.efi]
-       |
-       v
-[ESP] -> crea \EFI\MyApp -> scrive payload.exe -> cancella run.flag
-       |
-       v
-[chainload bootmgfw.efi]
-       |
-       v
-[Windows Boot Manager] -> [Windows]
-       |
-       v
-[win_stage.exe] -> se run.flag manca: esegue payload.exe e ricrea run.flag
-       |
-       v
-[prossimo boot] -> efi_stage cancella di nuovo run.flag -> payload rieseguito
-
+![Diagramma di flusso](images/proof-of-work.png)
 
 
 
